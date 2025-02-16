@@ -28,6 +28,8 @@ typedef uint32 uint;
 //If it did, the linker would complain.
 #pragma warning(disable:4251)
 
+#pragma warning(disable: 4267) // warning C4267: Operator/Return: conversion from LargerType to SmallerType, possible loss of data
+
 #define WIN32_LEAN_AND_MEAN
 #define _USE_MATH_DEFINES
 #define _WINSOCK_DEPRECATED_NO_WARNINGS

@@ -100,7 +100,7 @@ int StringClass::Replace(const char* search, const char* replace, bool bCaseSens
   int nReplacements = 0;
 
   char* newstring = NULL;             // The modified string, NULL until we make a change
-  int newstringlen = Get_Length()+1;  // The length of the modified string
+  size_t newstringlen = Get_Length()+1;  // The length of the modified string
   const char* searchPtr = m_Buffer;   // The starting point for the next search, always lastreplacement+1
 
   // Figure out lengths in advance to avoid doing it repeatedly
@@ -122,7 +122,7 @@ int StringClass::Replace(const char* search, const char* replace, bool bCaseSens
       if ( searchlen != replacelen || NULL == newstring )
       {
         // Cache old data so we can clean up memory
-        int oldnewstringlen = newstringlen;
+        size_t oldnewstringlen = newstringlen;
         char* oldnewstring = newstring;
 
         newstringlen = oldnewstringlen + (replacelen-searchlen);
@@ -132,8 +132,8 @@ int StringClass::Replace(const char* search, const char* replace, bool bCaseSens
         memcpy(newstring, (NULL==oldnewstring)?m_Buffer:oldnewstring, replaceindex);
 
         // Copy characters following the string to be replaced
-        int postsearchindex = replaceindex+searchlen;
-        int postreplaceindex = replaceindex+replacelen;
+        size_t postsearchindex = replaceindex+searchlen;
+        size_t postreplaceindex = replaceindex+replacelen;
         memcpy(newstring+postreplaceindex, ((NULL==oldnewstring)?m_Buffer:oldnewstring)+postsearchindex, oldnewstringlen-postsearchindex);
 
         delete [] oldnewstring;
