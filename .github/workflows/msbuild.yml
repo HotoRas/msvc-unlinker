@@ -29,6 +29,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    # Error: MSBuild: Could not find Windows 8.1 SDK, Please change the target SDK to 10.0.22000.0 or up OR install it.
+    ### Manually install Windows 8.1 SDK to continue:
+    - name: Install Windows 8.1 SDK
+      shell: powershell
+      run: |
+        Invoke-WebRequest -Method Get -Uri https://go.microsoft.com/fwlink/p/?LinkId=323507 -OutFile win81sdk.exe -UseBasicParsing
+        Start-Process -Wait win81sdk.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
+
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v2
       # MSBUILD: Failed to find MSBUILD 14: Undefined Version
