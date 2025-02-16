@@ -30,12 +30,18 @@ jobs:
     - uses: actions/checkout@v4
 
     # Error: MSBuild: Could not find Windows 8.1 SDK, Please change the target SDK to 10.0.22000.0 or up OR install it.
-    ### Manually install Windows 8.1 SDK to continue:
-    - name: Install Windows 8.1 SDK
+    # Error: MSBuild: Could not find MSVC 2015 BuildTools, Please change the target Build Tools to later version OR install it.
+    ### Manually install Windows 8.1 SDK with BuildTools to continue:
+    - name: Install MSVC 2015 (v140) and Windows 8.1 SDK
       shell: powershell
       run: |
-        Invoke-WebRequest -Method Get -Uri https://go.microsoft.com/fwlink/p/?LinkId=323507 -OutFile win81sdk.exe -UseBasicParsing
-        Start-Process -Wait win81sdk.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
+        $VS_BTOOLS_EXE="bldtl140.exe" # gaggy 8.3
+        $VS_BTOOLS_URI="https://aka.ms/vs/15/release/vs_buildtools.exe"
+        Invoke-WebRequest -Uri $VS_BTOOLS_URI -OutFile $VS_BTOOLS_EXE
+        Start-Process -FilePath $VS_BTOOLS_EXE -ArgumentList `
+        "--add", "Microsoft.VisualStudio.Component.VC.140", `
+        "--add", "Microsoft.VisualStudio.Component.Windows81SDK", `
+        "--quiet", "--norestart", "--force", "--wait" -Wait -PassThru
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v2
