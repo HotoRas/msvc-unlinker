@@ -104,8 +104,8 @@ int StringClass::Replace(const char* search, const char* replace, bool bCaseSens
   const char* searchPtr = m_Buffer;   // The starting point for the next search, always lastreplacement+1
 
   // Figure out lengths in advance to avoid doing it repeatedly
-  int searchlen = strlen(search);
-  int replacelen = strlen(replace);
+  size_t searchlen = strlen(search);
+  size_t replacelen = strlen(replace);
 
   while ( NULL != searchPtr && (-1 == maxCount || nReplacements < maxCount) )
   {
@@ -116,7 +116,7 @@ int StringClass::Replace(const char* search, const char* replace, bool bCaseSens
     if ( NULL != foundPtr )
     {
       // Figure out the 0-based index of the first character to be replaced
-      int replaceindex = (int)foundPtr - (int)((NULL==newstring)?m_Buffer:newstring);
+      size_t replaceindex = (size_t)foundPtr - (size_t)((NULL==newstring)?m_Buffer:newstring);
 
       // Allocate a new string to fit the replacement data if necessary
       if ( searchlen != replacelen || NULL == newstring )

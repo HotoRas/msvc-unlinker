@@ -188,7 +188,7 @@ public:
 		{
 			return 0;
 		}
-		return(((unsigned long)ptr - (unsigned long)&(*this)[0]) / sizeof(T));
+		return(((size_t)ptr - (size_t)&(*this)[0]) / sizeof(T));
 	}
 	virtual int ID(T const &object)
 	{

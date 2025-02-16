@@ -46,7 +46,7 @@ struct SymbolTableEntry
 };
 struct RelocationEntry 
 {
-	unsigned long Rva;
+	size_t Rva;
 	Symbol *Symbol;
 	unsigned short Type;
 	bool operator== (const RelocationEntry &src) { return false; }
