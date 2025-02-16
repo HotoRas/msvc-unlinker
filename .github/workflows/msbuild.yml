@@ -31,8 +31,10 @@ jobs:
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v2
-      with:
-        vs-version: '[14.0,15.0)' # sets to 14.x
+      # MSBUILD: Failed to find MSBUILD 14: Undefined Version
+      ### Use latest Visual Studio and force-resolve MSBUILD SLN
+#      with:
+#        vs-version: '[14.0,15.0)' # sets to 14.x
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
